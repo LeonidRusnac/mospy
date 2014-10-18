@@ -23,4 +23,12 @@ class User(object):
 		'''Log out if logged in'''
 		pass
 
+	def getInfo(self):
+		'''Return the info data of a user'''
+		pass
+
+	def getTimers(self):
+		'''Return the timers'''
+		pass
+
 
