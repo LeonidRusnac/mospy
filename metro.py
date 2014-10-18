@@ -15,4 +15,27 @@ class Metro(object):
 		self.session = session
 		self.config = userConfig
 
-	
+	def attackRat(self):
+		pass
+
+	def claimBonus(self):
+		'''If possible claim the bonus'''
+		pass
+
+	def playThimble(self, nine=True):
+		pass
+
+	def metrowarRegister(self):
+		pass
+
+	def metroBranch(self):
+		pass
+
+	def getRobotData(self):
+		pass
+
+	def claimRobotResources(self):
+		pass
+
+
+
