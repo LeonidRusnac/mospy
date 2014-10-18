@@ -12,8 +12,18 @@ from lxml import html
 class Attack(object):
 	'''A class that contains methods for attacks'''
 
-	def __init__(self, userConfig):
-		pass
+	def __init__(self, session, userConfig):
+		self.session = session
+		self.config = userConfig
 
-	def attack(self, type='', min=0, max=0, id=0):
-		pass
+	def attack(self, typeA='', min=0, max=0, id=0):
+		'''
+		if id attack by id, if not type attack by levels 
+		else attack by type
+		'''
+		if id != 0:
+			print 'Attack by id'
+		elif typeA == '':
+			print 'Attack by levels'
+		else:
+			print 'Attack by type'
