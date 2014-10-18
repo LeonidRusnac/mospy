@@ -8,6 +8,8 @@ __version__   = "0.1"
 
 import pickle # simle write/read data from files
 import requests
+from lxml import html
+import sys, os
 
 class User(object):
 	'''Rappresents a user profile'''
@@ -48,18 +50,18 @@ class User(object):
 
 	def logout(self):
 		'''Log out if logged in'''
-		self.session = None
-		if os.path.exists(self.cm['cookies_file']):
-			os.remove(self.cm['cookies_file'])
+		self.session = requests.Session()
+		if os.path.exists(self.config['cookies_file']):
+			os.remove(self.config['cookies_file'])
 
 	def getInfo(self):
 		'''Return the info data of a user'''
 		info = {}
 		if self.logged():
-			response = self.session.get(self.config['url'] + 'player/')
+			response = self.session.get(self.config['siteUrl'] + 'player/')
 
-			if response.url == (self.config['url']+'player/'):
-				tree = html.formstring(response.text)
+			if response.url == (self.config['siteUrl']+'player/'):
+				tree = html.fromstring(response.text)
 				info['current_hp'] = tree.xpath('//span[@id="currenthp"]/text()')[0]
 				info['max_hp'] = tree.xpath('//span[@id="maxhp"]/text()')[0]
 				info["current_tonus"] = tree.xpath('//span[@id="currenttonus"]/text()')[0]
@@ -78,10 +80,10 @@ class User(object):
 	def getTimers(self):
 		'''Return the timers'''
 		if self.logged():
-			response = self.session.get(self.config['url'] + 'player/')
+			response = self.session.get(self.config['siteUrl'] + 'player/')
 
-			if response.url == (self.config['url']+'player/'):
-				tree = html.formstring(response.text)
+			if response.url == (self.config['siteUrl']+'player/'):
+				tree = html.fromstring(response.text)
 				return tree.xpath('//a[@id="timeout"]/@timer')[0] , tree.xpath('//a[@id="timeout2"]/@timer')[0]
 			else:
 				print 'Error into grab user timers'
