@@ -93,7 +93,7 @@ class User(object):
 
 '''
 #userConfig example
-userConfig = dict{
+userConfig = {
 	'siteUrl' : 'http://bbb.xx/',
 	'login' : 'aaa@cc.xx',
 	'password' : '123456',
