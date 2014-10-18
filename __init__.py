@@ -3,4 +3,4 @@ __license__   = "MIT"
 __copyright__ = "Copyright 2014, Leonid Rusnac"
 __version__   = "0.1"
 
-__all__ = ['user', 'attack'] # list of all classes
+__all__ = ['user', 'attack', 'factory'] # list of all classes
