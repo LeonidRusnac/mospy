@@ -10,4 +10,10 @@ import requests
 from lxml import html
 
 class Attack(object):
-	pass
+	'''A class that contains methods for attacks'''
+
+	def __init__(self, userConfig):
+		pass
+
+	def attack(self, type='', min=0, max=0, id=0):
+		pass
