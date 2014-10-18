@@ -6,6 +6,9 @@ __license__   = "MIT"
 __copyright__ = "Copyright 2014, Leonid Rusnac"
 __version__   = "0.1"
 
+import pickle # simle write/read data from files
+import requests
+
 class User(object):
 	'''Rappresents a user profile'''
 	def __init__(self, session, userConfig):
@@ -51,11 +54,40 @@ class User(object):
 
 	def getInfo(self):
 		'''Return the info data of a user'''
-		pass
+		info = {}
+		if self.logged():
+			response = self.session.get(self.config['url'] + 'player/')
+
+			if response.url == (self.config['url']+'player/'):
+				tree = html.formstring(response.text)
+				info['current_hp'] = tree.xpath('//span[@id="currenthp"]/text()')[0]
+				info['max_hp'] = tree.xpath('//span[@id="maxhp"]/text()')[0]
+				info["current_tonus"] = tree.xpath('//span[@id="currenttonus"]/text()')[0]
+				info["max_tonus"] = tree.xpath('//span[@id="maxenergy"]/text()')[0]
+
+				info["money"] = tree.xpath('//span[@rel="money"]/text()')[0]
+				info["ore"] = tree.xpath('//span[@rel="ore"]/text()')[0]
+				info["oil"] = tree.xpath('//span[@rel="oil"]/text()')[0]
+				info["honey"] = tree.xpath('//span[@rel="honey"]/text()')[0]
+			else:
+				print 'Error into grab user info'
+		else:
+			print 'Please log in first'
+		return info
 
 	def getTimers(self):
 		'''Return the timers'''
-		pass
+		if self.logged():
+			response = self.session.get(self.config['url'] + 'player/')
+
+			if response.url == (self.config['url']+'player/'):
+				tree = html.formstring(response.text)
+				return tree.xpath('//a[@id="timeout"]/@timer')[0] , tree.xpath('//a[@id="timeout2"]/@timer')[0]
+			else:
+				print 'Error into grab user timers'
+		else:
+			print 'Please log in first'
+		return '', ''
 
 '''
 #userConfig example
