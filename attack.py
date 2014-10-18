@@ -23,7 +23,56 @@ class Attack(object):
 		'''
 		if id != 0:
 			print 'Attack by id'
+			response = self.session.post(self.config['siteUrl']+'alley/', data={
+				'action': 'attack',
+				'player': id,
+				'werewolf': 0,
+				'useitems': 0
+			})
+
+			if 'fight' in response.url:
+				print 'Attack done'
+				tree = html.fromstring(response.text)
+				print "You have won: " + tree.xpath('//span[@class="tugriki"]/text()')[0]
+			else:
+				print 'Something gone wrong'
 		elif typeA == '':
 			print 'Attack by levels'
 		else:
 			print 'Attack by type'
+			types = 'equal' , 'weak' , 'strong' , 'enemy' , 'victim'
+			if typeA not in types:
+				typeA = types[0]
+
+			response = self.session.post(self.config['siteUrl']+'alley/search/type/', data={
+				'type': typeA,
+				'werewolf': 0
+			})
+
+			if 'alley/search' in response.url:
+				tree = html.fromstring(response.text)
+
+				if max > -1:
+					i = 0
+					while i < 50:
+						i += 1
+						victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
+						victimLvl = int(victimLvl.split('[')[1].split(']')[0])
+						victimID = 0
+
+						if (victimLvl <= max) and (victimLvl >= min):
+							break
+						response = self.session.get(self.config['siteUrl']+'alley/search/again/')
+						tree = html.fromstring(response.text)
+				else:
+					victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
+					victimLvl = victimLvl.split('[')[1].split(']')[0]
+
+				victimID = tree.xpath('//a[contains(@onclick,"alleyAttack")]/@onclick')[0]
+				victimID = victimID.split('(')[1].split(',')[0]
+				#print victimID
+				self.attack(id=victimID)
+			else:
+				print 'Error'
+
+
