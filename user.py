@@ -17,6 +17,14 @@ class User(object):
 		self.session = session
 		self.config = userConfig #dictionary with siteUrl, login, password, cookies_file
 
+		if os.path.exists(self.config['cookies_file']):
+			try:
+				with open(self.config['cookies_file']) as f:
+					self.session.cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
+			except IOError:
+				pass
+				#print "The cookies file doesn't exists"
+
 	def logged(self):
 		'''Check if the user is logged in'''
 		response = self.session.get(self.config['siteUrl'] + "player/")
