@@ -20,9 +20,9 @@ class Factory(object):
 		if response.url == (self.config['siteUrl']+'factory/'):
 
 			tree = html.fromstring(response.text)
-			timerPet = tree.xpath('//span[@id="petriksprocess"]/@timer')[0]
+			timerPet = tree.xpath('//span[@id="petriksprocess"]/@timer')
 			print timerPet
-			if timerPet == '':
+			if not tree.xpath('//span[@id="petriksprocess"]/@timer'):
 				response = self.session.post(self.config['siteUrl']+'factory/start-petriks/', data={
 					'player' : self.config['playerId']
 				})
