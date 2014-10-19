@@ -16,8 +16,19 @@ class Factory(object):
 		self.config = userConfig
 
 	def makePetriks(self):
-		response = self.session.post(self.config['siteUrl']+'factory/start-petriks/', data={
-			'player' : self.config['playerId']
-		})
+		response = self.session.get(self.config['siteUrl']+'factory/')
+		if response.url == (self.config['siteUrl']+'factory/'):
 
-		print 'done petriki'
+			tree = html.fromstring(response.text)
+			timerPet = tree.xpath('//span[@id="petriksprocess"]/@timer')[0]
+			print timerPet
+			if timerPet == '':
+				response = self.session.post(self.config['siteUrl']+'factory/start-petriks/', data={
+					'player' : self.config['playerId']
+				})
+
+				print 'done petriki'
+			else:
+				print 'you\'re already making petriks!'
+		else:
+			print 'Error making petriki, be sure not blocked somewhere!'
