@@ -16,7 +16,23 @@ class Metro(object):
 		self.config = userConfig
 
 	def attackRat(self):
-		pass
+		'''get timer of new start'''
+		'''get level, and time to wait''' #dashedlink
+		response = self.session.get(self.config['siteUrl']+'metro/')
+		if response.url == (self.config['siteUrl']+'metro/'):
+
+			tree = html.fromstring(response.text)
+			
+			if not tree.xpath('//small[@class="dashedlink"]/@timer'):
+				#response = self.session.post(self.config['siteUrl']+'factory/start-petriks/', data={
+				#	'player' : self.config['playerId']
+				#})
+
+				print 'liv 1'
+			else:
+				print 'not init'
+		else:
+			print 'Error attacking rat, be sure not blocked somewhere!'
 
 	def claimBonus(self):
 		'''If possible claim the bonus'''
