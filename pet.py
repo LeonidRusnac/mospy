@@ -57,7 +57,7 @@ class FightingPet(object):
 			t = self.getTrainLevels()
 			return {'hp': pethp[0], 'maxhp': pethp[1], 'tonus': tonus, 'timer': self.getTrainTimer(), 'focus': t[0], 'loyality': t[1], 'mass': t[2]}
 		else:
-			print 'Error getTrainLevel, be sure not blocked somewhere!'
+			print 'Error getDescription, be sure not blocked somewhere!'
 
 	def cuddle(self):
 		self.session.post(self.config['siteUrl']+'petarena/mood/'+str(self.petid)+'/', data={
@@ -87,8 +87,36 @@ class JoggingPet(object):
 		response = self.session.get(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/arena/')
 		if response.url == (self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/arena/'):
 			tree = html.fromstring(response.text)
-			print tree.xpath('//span[@class="num"]/text()')
+			return tree.xpath('//span[@class="num"]/text()')
 		else:
 			print 'Error getTrainLevel, be sure not blocked somewhere!'
 
-	
+	def train(self, skill):
+		if skill not in ['acceleration', 'speed', 'endurance', 'dexterity']:
+			print "Error skill type!"
+		else:
+			self.session.post(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/'+skill+'/', data={
+				'action': 'train',
+				'pet': self.petid,
+				'skill': skill
+			})
+
+			print "done training!"
+
+	def getDescription(self):
+		response = self.session.get(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/arena/')
+		if response.url == (self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/arena/'):
+			tree = html.fromstring(response.text)
+			
+			pethp = tree.xpath('//li[@class="progressbar tonus"]/span/div/span/text()')[0]
+			t = self.getTrainLevels()
+
+			return {'hp': pethp, 'acceleration': t[0], 'speed': t[1], 'endurance': t[2], 'dexterity': t[3]}
+		else:
+			print 'Error getDescription, be sure not blocked somewhere!'
+
+
+	def registerRace(self):
+		pass
+
+
