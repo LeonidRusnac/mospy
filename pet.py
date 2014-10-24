@@ -23,3 +23,15 @@ class Pet(object):
 			print tree.xpath('//span[@class="num"]/text()')
 		else:
 			print 'Error getTrainLevel, be sure not blocked somewhere!'
+
+	def train(self, skill):
+		if skill not in ['focus', 'loyality', 'mass']:
+			print "Error skill type!"
+		else:
+			response = self.session.post(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/'+skill+'/', data={
+				'action': 'train',
+				'pet': self.petid,
+				'skill': skill
+			})
+
+			print "done training!"
