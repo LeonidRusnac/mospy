@@ -9,7 +9,7 @@ __version__   = "0.1"
 import requests
 from lxml import html
 
-class Pet(object):
+class FightingPet(object):
 	def __init__(self, session, userConfig, petid):
 		self.petid = petid
 		self.session = session
@@ -76,3 +76,11 @@ class Pet(object):
 		})
 
 		print "done set active!"
+
+
+class JoggingPet(object):
+	def __init__(self, session, userConfig, petid):
+		self.petid = petid
+		self.session = session
+		self.config = userConfig
+		
