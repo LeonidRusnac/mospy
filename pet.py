@@ -35,3 +35,20 @@ class Pet(object):
 			})
 
 			print "done training!"
+
+	def getTrainTimer(self):
+		response = self.session.get(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/')
+		if response.url == (self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/'):
+			tree = html.fromstring(response.text)
+			tim =tree.xpath('//span[@id="train"]/@timer')
+			if not tim:
+				tim = 0
+			else:
+				tim = tim[0]
+			return tim
+		else:
+			print 'Error getTrainLevel, be sure not blocked somewhere!'
+
+
+
+
