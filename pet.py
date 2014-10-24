@@ -60,4 +60,11 @@ class Pet(object):
 		else:
 			print 'Error getTrainLevel, be sure not blocked somewhere!'
 
+	def cuddle(self):
+		#post("/petarena/mood/" + pet + "/", {"action": "mood", "pet": pet, "ajax": 1, "postkey": postVerifyKey},
+		response = self.session.post(self.config['siteUrl']+'petarena/mood/'+str(self.petid)+'/', data={
+			'action': 'mood',
+			'pet': self.petid
+		})
 
+		print "done cuddling!"
