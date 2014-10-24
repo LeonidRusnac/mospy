@@ -16,7 +16,6 @@ class FightingPet(object):
 		self.config = userConfig
 
 	def getTrainLevels(self):
-		#/petarena/train/2087233/
 		response = self.session.get(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/')
 		if response.url == (self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/'):
 			tree = html.fromstring(response.text)
@@ -84,3 +83,12 @@ class JoggingPet(object):
 		self.session = session
 		self.config = userConfig
 		
+	def getTrainLevels(self):
+		response = self.session.get(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/arena/')
+		if response.url == (self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/arena/'):
+			tree = html.fromstring(response.text)
+			print tree.xpath('//span[@class="num"]/text()')
+		else:
+			print 'Error getTrainLevel, be sure not blocked somewhere!'
+
+	
