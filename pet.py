@@ -28,7 +28,7 @@ class Pet(object):
 		if skill not in ['focus', 'loyality', 'mass']:
 			print "Error skill type!"
 		else:
-			response = self.session.post(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/'+skill+'/', data={
+			self.session.post(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/'+skill+'/', data={
 				'action': 'train',
 				'pet': self.petid,
 				'skill': skill
@@ -61,10 +61,18 @@ class Pet(object):
 			print 'Error getTrainLevel, be sure not blocked somewhere!'
 
 	def cuddle(self):
-		#post("/petarena/mood/" + pet + "/", {"action": "mood", "pet": pet, "ajax": 1, "postkey": postVerifyKey},
-		response = self.session.post(self.config['siteUrl']+'petarena/mood/'+str(self.petid)+'/', data={
+		self.session.post(self.config['siteUrl']+'petarena/mood/'+str(self.petid)+'/', data={
 			'action': 'mood',
 			'pet': self.petid
 		})
 
 		print "done cuddling!"
+
+	def setActive(self):
+		self.session.post(self.config['siteUrl']+'petarena/active/'+str(self.petid)+'/', data={
+			'action': 'active',
+			'pet': self.petid,
+			'type': 'battle'
+		})
+
+		print "done set active!"
