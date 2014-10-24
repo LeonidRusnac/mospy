@@ -8,3 +8,4 @@ from .user import User
 from .attack import Attack
 from .factory import Factory
 from .metro import Metro
+from .pet import Pet
