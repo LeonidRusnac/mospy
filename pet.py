@@ -15,12 +15,12 @@ class Pet(object):
 		self.session = session
 		self.config = userConfig
 
-	def getTrainLevel(self):
+	def getTrainLevels(self):
 		#/petarena/train/2087233/
 		response = self.session.get(self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/')
 		if response.url == (self.config['siteUrl']+'petarena/train/'+str(self.petid)+'/'):
 			tree = html.fromstring(response.text)
-			print tree.xpath('//span[@class="num"]/text()')
+			return tree.xpath('//span[@class="num"]/text()')
 		else:
 			print 'Error getTrainLevel, be sure not blocked somewhere!'
 
@@ -55,7 +55,8 @@ class Pet(object):
 			tree = html.fromstring(response.text)
 			pethp = tree.xpath('//span[@id="pethp"]/text()')[0].split('/')
 			tonus = tree.xpath('//div[@id="pet-tonus"]/span[@rel="tonus"]/text()')[0]
-			return {'hp': pethp[0], 'maxhp': pethp[1], 'tonus': tonus, 'timer': self.getTrainTimer()}
+			t = self.getTrainLevels()
+			return {'hp': pethp[0], 'maxhp': pethp[1], 'tonus': tonus, 'timer': self.getTrainTimer(), 'focus': t[0], 'loyality': t[1], 'mass': t[2]}
 		else:
 			print 'Error getTrainLevel, be sure not blocked somewhere!'
 
