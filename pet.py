@@ -117,6 +117,11 @@ class JoggingPet(object):
 
 
 	def registerRace(self):
-		pass
+		#/petrun/signup/race/
+		self.session.post(self.config['siteUrl']+'petrun/signup/race/'+str(self.petid)+'/'+skill+'/', data={
+				'action': 'train',
+				'pet': self.petid,
+				'skill': skill
+			})
 
 
