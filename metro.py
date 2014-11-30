@@ -47,9 +47,9 @@ class Metro(object):
 			x = range(0, 9)
 			shuffle(x)
 			self.session.get(self.config['siteUrl']+'thimble/play/9/0/')
-			self.session.get(self.config['siteUrl']+'thimble/guess/'+x[0]+'/')
-			self.session.get(self.config['siteUrl']+'thimble/guess/'+x[1]+'/')
-			self.session.get(self.config['siteUrl']+'thimble/guess/'+x[2]+'/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/'+str(x[0])+'/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/'+str(x[1])+'/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/'+str(x[2])+'/')
 
 		self.session.get(self.config['siteUrl']+'thimble/leave/')
 
