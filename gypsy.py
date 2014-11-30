@@ -17,14 +17,14 @@ class Gypsy(object):
 	def gypsyPlay(self):
 		response = self.session.get(self.config['siteUrl']+'camp/gypsy/')
 		if response.url == (self.config['siteUrl']+'camp/gypsy/'):
-			self.session.post(self.config['siteUrl']+'camp/gypsy//', data={
+			self.session.post(self.config['siteUrl']+'camp/gypsy/', data={
 				'action': 'gypsyStart',
 				'gametype': 1
 			})
 
 			print "Gypsy start!"
 
-			self.session.post(self.config['siteUrl']+'camp/gypsy//', data={
+			self.session.post(self.config['siteUrl']+'camp/gypsy/', data={
 				'action': 'gypsyAuto'
 			})
 
