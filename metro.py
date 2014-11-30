@@ -38,7 +38,20 @@ class Metro(object):
 		'''If possible claim the bonus'''
 		pass
 
-	def playThimble(self, nine=True):
+	def playThimble(self, sum, nine=True):
+		# trasform money to ruda
+		self.session.get(self.config['siteUrl']+'thimble/start/')
+
+		for i in range(0, sum/1500):
+			self.session.get(self.config['siteUrl']+'thimble/play/9/0/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/0/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/4/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/8/')
+
+		self.session.get(self.config['siteUrl']+'thimble/leave/')
+
+
+
 		pass
 
 	def metrowarRegister(self):
