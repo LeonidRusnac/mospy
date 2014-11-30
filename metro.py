@@ -8,6 +8,7 @@ __version__   = "0.1"
 
 import requests
 from lxml import html
+from random import shuffle
 
 class Metro(object):
 	'''Class that do the work in metro'''
@@ -43,10 +44,12 @@ class Metro(object):
 		self.session.get(self.config['siteUrl']+'thimble/start/')
 
 		for i in range(0, sum/1500):
+			x = range(0, 9)
+			shuffle(x)
 			self.session.get(self.config['siteUrl']+'thimble/play/9/0/')
-			self.session.get(self.config['siteUrl']+'thimble/guess/0/')
-			self.session.get(self.config['siteUrl']+'thimble/guess/4/')
-			self.session.get(self.config['siteUrl']+'thimble/guess/8/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/'+x[0]+'/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/'+x[1]+'/')
+			self.session.get(self.config['siteUrl']+'thimble/guess/'+x[2]+'/')
 
 		self.session.get(self.config['siteUrl']+'thimble/leave/')
 
