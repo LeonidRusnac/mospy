@@ -111,7 +111,9 @@ class JoggingPet(object):
 			pethp = tree.xpath('//li[@class="progressbar tonus"]/span/div/span/text()')[0]
 			t = self.getTrainLevels()
 
-			return {'hp': pethp, 'acceleration': t[0], 'speed': t[1], 'endurance': t[2], 'dexterity': t[3]}
+			registred = 'food-mixer' not in self.session.get(self.config['siteUrl']+'petrun/').text
+
+			return {'hp': pethp, 'acceleration': t[0], 'speed': t[1], 'endurance': t[2], 'dexterity': t[3], 'registred': registred}
 		else:
 			print 'Error getDescription, be sure not blocked somewhere!'
 
@@ -124,5 +126,4 @@ class JoggingPet(object):
 				'pet-names': self.petid,
 				'tickets-type': 'free_ticket'
 			})
-
 
