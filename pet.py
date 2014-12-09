@@ -118,12 +118,15 @@ class JoggingPet(object):
 			print 'Error getDescription, be sure not blocked somewhere!'
 
 
-	def registerRace(self):
-		#/petrun/signup/race/
+	def registerRace(self, free=True):
+		if free:
+			t = 'free_ticket'
+		else:
+			t = 'ticket'
 		self.session.post(self.config['siteUrl']+'petrun/signup/race/', data={
 				'__ajax': 1,
 				'return_url': '/petrun/',
 				'pet-names': self.petid,
-				'tickets-type': 'free_ticket'
+				'tickets-type': t
 			})
 
