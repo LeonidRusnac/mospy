@@ -11,3 +11,4 @@ from .metro import Metro
 from .pet import FightingPet
 from .pet import JoggingPet
 from .gypsy import Gypsy
+from .gift import Gift
