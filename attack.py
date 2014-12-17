@@ -18,7 +18,7 @@ class Attack(object):
 
 	def attack(self, typeA='', min=0, max=0, id=0):
 		'''
-		if id attack by id, if not type attack by levels 
+		if id attack by id, if not type attack by levels
 		else attack by type
 		'''
 		if id != 0:
@@ -54,7 +54,7 @@ class Attack(object):
 
 				if max > -1:
 					i = 0
-					while i < 50:
+					while i < 500:
 						i += 1
 						victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
 						victimLvl = int(victimLvl.split('[')[1].split(']')[0])
