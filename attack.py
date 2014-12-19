@@ -54,7 +54,7 @@ class Attack(object):
 
                 if max > -1:
                     i = 0
-                    while true:
+                    while True:
                         i += 1
                         valid = not npc
                         victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
