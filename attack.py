@@ -10,69 +10,74 @@ import requests
 from lxml import html
 
 class Attack(object):
-	'''A class that contains methods for attacks'''
+    '''A class that contains methods for attacks'''
 
-	def __init__(self, session, userConfig):
-		self.session = session
-		self.config = userConfig
+    def __init__(self, session, userConfig):
+        self.session = session
+        self.config = userConfig
 
-	def attack(self, typeA='', min=0, max=0, id=0):
-		'''
-		if id attack by id, if not type attack by levels
-		else attack by type
-		'''
-		if id != 0:
-			print 'Attack by id'
-			response = self.session.post(self.config['siteUrl']+'alley/', data={
-				'action': 'attack',
-				'player': id,
-				'werewolf': 0,
-				'useitems': 0
-			})
+    def attack(self, typeA='', min=0, max=0, id=0, npc=True):
+        '''
+        if id attack by id, if not type attack by levels
+        else attack by type
+        '''
+        if id != 0:
+            print 'Attack by id'
+            response = self.session.post(self.config['siteUrl']+'alley/', data={
+                'action': 'attack',
+                'player': id,
+                'werewolf': 0,
+                'useitems': 0
+            })
 
-			if 'fight' in response.url:
-				print 'Attack done'
-				tree = html.fromstring(response.text)
-				print "You have won: " + tree.xpath('//span[@class="tugriki"]/text()')[0]
-			else:
-				print 'Something gone wrong'
-		elif typeA == '':
-			print 'Attack by levels'
-		else:
-			print 'Attack by type'
-			types = 'equal' , 'weak' , 'strong' , 'enemy' , 'victim'
-			if typeA not in types:
-				typeA = types[0]
+            if 'fight' in response.url:
+                print 'Attack done'
+                tree = html.fromstring(response.text)
+                print "You have won: " + tree.xpath('//span[@class="tugriki"]/text()')[0]
+            else:
+                print 'Something gone wrong'
+        elif typeA == '':
+            print 'Attack by levels'
+        else:
+            print 'Attack by type'
+            types = 'equal' , 'weak' , 'strong' , 'enemy' , 'victim'
+            if typeA not in types:
+                typeA = types[0]
 
-			response = self.session.post(self.config['siteUrl']+'alley/search/type/', data={
-				'type': typeA,
-				'werewolf': 0
-			})
+            response = self.session.post(self.config['siteUrl']+'alley/search/type/', data={
+                'type': typeA,
+                'werewolf': 0
+            })
 
-			if 'alley/search' in response.url:
-				tree = html.fromstring(response.text)
+            if 'alley/search' in response.url:
+                tree = html.fromstring(response.text)
 
-				if max > -1:
-					i = 0
-					while i < 500:
-						i += 1
-						victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
-						victimLvl = int(victimLvl.split('[')[1].split(']')[0])
-						victimID = 0
+                if max > -1:
+                    i = 0
+                    while i < 500:
+                        i += 1
+                        valid = not npc
+                        victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
+                        victimLvl = int(victimLvl.split('[')[1].split(']')[0])
+                        victimID = 0
 
-						if (victimLvl <= max) and (victimLvl >= min):
-							break
-						response = self.session.get(self.config['siteUrl']+'alley/search/again/')
-						tree = html.fromstring(response.text)
-				else:
-					victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
-					victimLvl = victimLvl.split('[')[1].split(']')[0]
+                        nnn = tree.xpath('//div[@class="fighter2"]//i/@class')[0]
+                        print nnn
+                        if nnn == 'npc':
+                            valid = True
+                        if valid and (victimLvl <= max) and (victimLvl >= min):
+                            break
+                        response = self.session.get(self.config['siteUrl']+'alley/search/again/')
+                        tree = html.fromstring(response.text)
+                else:
+                    victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
+                    victimLvl = victimLvl.split('[')[1].split(']')[0]
 
-				victimID = tree.xpath('//a[contains(@onclick,"alleyAttack")]/@onclick')[0]
-				victimID = victimID.split('(')[1].split(',')[0]
-				#print victimID
-				self.attack(id=victimID)
-			else:
-				print 'Error'
+                victimID = tree.xpath('//a[contains(@onclick,"alleyAttack")]/@onclick')[0]
+                victimID = victimID.split('(')[1].split(',')[0]
+                #print victimID
+                self.attack(id=victimID)
+            else:
+                print 'Error'
 
 
