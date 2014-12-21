@@ -54,7 +54,7 @@ class Attack(object):
 
                 if max > -1:
                     i = 0
-                    while True:
+                    while i<100:
                         i += 1
                         valid = not npc
                         victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
@@ -69,6 +69,8 @@ class Attack(object):
                             break
                         response = self.session.get(self.config['siteUrl']+'alley/search/again/')
                         tree = html.fromstring(response.text)
+                        if i > 99:
+                            return ''
                 else:
                     victimLvl = tree.xpath('//div[@class="fighter2"]//span[@class="level"]/text()')[0]
                     victimLvl = victimLvl.split('[')[1].split(']')[0]
