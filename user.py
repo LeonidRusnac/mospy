@@ -54,7 +54,7 @@ class User(object):
 					pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
 				print "Congrats, you're now logged in"
 		else:
-			print "Already logged in"
+			# print "Already logged in"
 
 	def logout(self):
 		'''Log out if logged in'''
