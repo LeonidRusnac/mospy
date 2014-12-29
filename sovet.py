@@ -46,7 +46,7 @@ class Sovet(object):
                                       'passcode': password})
                 # now eat vitamins
                 self.session.get(self.config['siteUrl'] +
-                                 'player/json/use/1792887764/')
+                                 'player/json/use/1793838029/')
             else:
                 print "can't register for sovet"
         else:
