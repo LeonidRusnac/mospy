@@ -30,7 +30,7 @@ class Sovet(object):
                 self.session.post(self.config['siteUrl'] +
                                   'sovet/select_active_metro/', data={
                                       'action': 'select_active_metro',
-                                      'metro': lvl}
+                                      'metro': lvl})
                 # now register do game
                 self.session.post(self.config['siteUrl'] +
                                   'sovet/join_metro_fight/', data={
