@@ -55,6 +55,7 @@ class User(object):
 				print "Congrats, you're now logged in"
 		else:
 			# print "Already logged in"
+            pass
 
 	def logout(self):
 		'''Log out if logged in'''
