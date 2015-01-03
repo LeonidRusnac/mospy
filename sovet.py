@@ -6,7 +6,6 @@ __license__ = "MIT"
 __copyright__ = "Copyright 2014, Leonid Rusnac"
 __version__ = "0.1"
 
-import requests
 from lxml import html
 
 
@@ -45,8 +44,12 @@ class Sovet(object):
                                       'type': 'sovet',
                                       'passcode': password})
                 # now eat vitamins
+                resp = self.session.get(self.config['siteUrl']+'player/')
+                t = html.fromstring(resp.text)
+                indice = t.xpath('//img[@data-st=3397]/@data-id')[0]
+
                 self.session.get(self.config['siteUrl'] +
-                                 'player/json/use/1522031924/')
+                                 'player/json/use/'+indice+'/')
             else:
                 print "can't register for sovet"
         else:
