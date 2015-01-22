@@ -13,3 +13,4 @@ from .pet import JoggingPet
 from .gypsy import Gypsy
 from .gift import Gift
 from .sovet import Sovet
+from .casino import Casino
