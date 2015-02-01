@@ -19,7 +19,7 @@ class Gypsy(object):
 		if response.url == (self.config['siteUrl']+'camp/gypsy/'):
 			self.session.post(self.config['siteUrl']+'camp/gypsy/', data={
 				'action': 'gypsyStart',
-				'gametype': 1
+				'gametype': 0
 			})
 
 			print "Gypsy start!"
