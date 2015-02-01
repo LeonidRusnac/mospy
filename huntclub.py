@@ -5,7 +5,7 @@ from lxml import html
 from time import sleep
 
 
-class Hunt(object):
+class HuntClub(object):
     '''A class that scans and attacks in hunt'''
 
     def __init__(self, session, userConfig):
@@ -14,7 +14,7 @@ class Hunt(object):
 
     def numattacks(self):
         # return the numbers of remaining attacks
-        return 0
+        return 10
 
     def hunt(self, level, at):
         done = False
