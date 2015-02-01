@@ -14,4 +14,4 @@ from .gypsy import Gypsy
 from .gift import Gift
 from .sovet import Sovet
 from .casino import Casino
-from .huntclub import Huntclub
+from .huntclub import HuntClub
