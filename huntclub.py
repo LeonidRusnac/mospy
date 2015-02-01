@@ -14,7 +14,11 @@ class HuntClub(object):
 
     def numattacks(self):
         # return the numbers of remaining attacks
-        return 10
+        response = self.session.get(self.config['siteUrl'] + 'huntclub/')
+        tree = html.fromstring(response.text)
+        ris = tree.xpath('//div[@class="prolong"]//p[@class="holders"]/text()')[0]
+        ris = ris.split(': ')[1]
+        return int(ris)
 
     def hunt(self, level, at):
         done = False
