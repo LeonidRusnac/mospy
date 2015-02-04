@@ -33,7 +33,7 @@ class HuntClub(object):
                                   /text()')[0]
                 myhp = int(myhp)
 
-            for r in ris:
+            for r in set(ris):
                 r = r.split('/')[2]
 
                 response = self.session.get(
