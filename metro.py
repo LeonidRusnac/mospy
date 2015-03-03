@@ -23,17 +23,17 @@ class Metro(object):
 		if response.url == (self.config['siteUrl']+'metro/'):
 
 			tree = html.fromstring(response.text)
-			
-			if not tree.xpath('//small[@class="dashedlink"]/@timer'):
-				#response = self.session.post(self.config['siteUrl']+'factory/start-petriks/', data={
-				#	'player' : self.config['playerId']
-				#})
-
-				print 'liv 1'
+			# '//td[@id = "ratfight"]/@timer'
+			timer = int(tree.xpath('//td[@id = "ratfight"]/@timer')[0])
+			if timer < 1:
+				lvl = tree.xpath('//div[@id="action-rat-fight"]/div[@class="holders"]/text()')[0]
+				lvl = int(lvl.split(':')[1])
+				print 'level:' + str(lvl)
+				if lvl % 5 != 0 and lvl < 35:
+					self.session.post(self.config['siteUrl']+'metro/track-rat')
+					self.session.post(self.config['siteUrl']+'metro/fight-rat')
 			else:
-				print 'not init'
-		else:
-			print 'Error attacking rat, be sure not blocked somewhere!'
+				print 'Error attacking rat, be sure not blocked somewhere!'
 
 	def claimBonus(self):
 		'''If possible claim the bonus'''
