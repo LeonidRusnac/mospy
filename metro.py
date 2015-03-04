@@ -24,17 +24,20 @@ class Metro(object):
 
 			tree = html.fromstring(response.text)
 			# '//td[@id = "ratfight"]/@timer'
-			timer = int(tree.xpath('//td[@id = "ratfight"]/@timer')[0])
-			if timer < 1:
-				lvl = tree.xpath('//div[@id="action-rat-fight"]/div[@class="holders"]/text()')[0]
-				lvl = int(lvl.split(':')[1])
-				print 'level:' + str(lvl)
-				if lvl % 5 != 0 and lvl < 35:
-					self.session.post(self.config['siteUrl']+'metro/track-rat')
-					self.session.post(self.config['siteUrl']+'metro/fight-rat')
+			t = tree.xpath('//td[@id = "ratfight"]/@timer')
+			if t:
+				timer = int(t[0])
+				if timer < 1:
+					lvl = tree.xpath('//div[@id="action-rat-fight"]/div[@class="holders"]/text()')[0]
+					lvl = int(lvl.split(':')[1])
+					print 'level:' + str(lvl)
+					if lvl % 5 != 0 or lvl < 16:
+						self.session.post(self.config['siteUrl']+'metro/track-rat')
+						self.session.post(self.config['siteUrl']+'metro/fight-rat')
+				else:
+					print 'Error attacking rat, be sure not blocked somewhere!'
 			else:
-				print 'Error attacking rat, be sure not blocked somewhere!'
-
+				print "You have already attacked all the rats for today"
 	def claimBonus(self):
 		'''If possible claim the bonus'''
 		pass
