@@ -39,6 +39,6 @@ class Gypsy(object):
 	    response = self.session.get(self.config['siteUrl']+'camp/gypsy/')
 	    if response.url == (self.config['siteUrl']+'camp/gypsy/'):
 	    	tree = html.fromstring(response.text)
-	    	perc = tree.xpath('//div[@id="content"]/script/text()')
-	    	if perc:
-	    		return int(perc[0].split('progress":')[1].split('}')[0])
+	    	perc = tree.xpath('//div[@id="content"]/script/text()')[0].split('progress":')
+	    	if len(perc) > 1:
+	    		return int(perc[1].split('}')[0])
