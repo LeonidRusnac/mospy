@@ -34,3 +34,11 @@ class Gypsy(object):
 
 		else:
 			print 'Error play with gypsy, be sure not blocked somewhere!'
+
+	def getDisaster(self):
+	    response = self.session.get(self.config['siteUrl']+'camp/gypsy/')
+	    if response.url == (self.config['siteUrl']+'camp/gypsy/'):
+	    	tree = html.fromstring(response.text)
+	    	perc = tree.xpath('//div[@id="content"]/script/text()')
+	    	if perc:
+	    		return int(perc[0].split('progress":')[1].split('}')[0])
