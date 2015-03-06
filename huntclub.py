@@ -21,8 +21,9 @@ class HuntClub(object):
         return int(ris)
 
     def hunt(self, level, at):
+        i = 0
         done = False
-        while not done:
+        while not done and i < 20:
             response = self.session.get(self.config['siteUrl'] + 'huntclub/')
             tree = html.fromstring(response.text)
 
@@ -54,3 +55,4 @@ class HuntClub(object):
                         done = True
                         break
             sleep(1)
+            i = i + 1
