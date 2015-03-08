@@ -42,3 +42,5 @@ class Gypsy(object):
 	    	perc = tree.xpath('//div[@id="content"]/script/text()')[0].split('progress":')
 	    	if len(perc) > 1:
 	    		return int(perc[1].split('}')[0])
+	    	return 0
+	    return -1
