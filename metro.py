@@ -34,7 +34,9 @@ class Metro(object):
 					if lvl % 5 != 0 or lvl < 16:
 						self.session.post(self.config['siteUrl']+'metro/track-rat')
 						self.session.post(self.config['siteUrl']+'metro/fight-rat')
+					return lvl
 				else:
+					return -1
 					print 'Error attacking rat, be sure not blocked somewhere!'
 			else:
 				print "You have already attacked all the rats for today"
