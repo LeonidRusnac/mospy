@@ -21,7 +21,7 @@ class Chat(object):
                 'lastMessageId': lastID
             }).text)['result']['messages']
 
-        for m in range(len(messages)):
+        for m in messages:
             lastID = messages[m]['id']
             if messages[m]['type'] == 'system':
                 messTime = messages[m]['time']
