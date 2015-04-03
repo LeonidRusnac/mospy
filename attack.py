@@ -38,11 +38,22 @@ class Attack(object):
                 print 'Something gone wrong'
         elif typeA == '':
             print 'Attack by levels'
+            response = self.session.post(self.config['siteUrl']+'alley/search/level/', data={
+                'minlevel': min,
+                'maxlevel': max
+            })
+            if 'alley/search' in response.url:
+                tree = html.fromstring(response.text)
+                victimID = 0
+                victimID = tree.xpath('//a[contains(@onclick,"alleyAttack")]/@onclick')[0]
+                victimID = victimID.split('(')[1].split(',')[0]
+                #print victimID
+                self.attack(id=victimID)
         else:
             print 'Attack by type'
             types = 'equal' , 'weak' , 'strong' , 'enemy' , 'victim'
             if typeA not in types:
-                typeA = types[0]
+                typeA = types[1]
 
             response = self.session.post(self.config['siteUrl']+'alley/search/type/', data={
                 'type': typeA,
