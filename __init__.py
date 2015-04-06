@@ -16,3 +16,4 @@ from .sovet import Sovet
 from .casino import Casino
 from .huntclub import HuntClub
 from .chat import Chat
+from .automobile import Auto
