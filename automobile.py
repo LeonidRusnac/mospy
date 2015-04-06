@@ -29,7 +29,7 @@ class Auto(object):
 
                 fuel = tree.xpath('//div[@class="fuel"]/span/text()')
                 if 0 in fuel:
-                   self.session.post(self.config['siteUrl']+'automobile/buypetrol/'+str(self.carid)+'/', data={})
+                   self.session.post(self.config['siteUrl']+'automobile/buypetrol/'+str(self.carid)+'/ajax/', data={})
 
 
                 self.session.post(self.config['siteUrl']+'automobile/bringup/', data={
