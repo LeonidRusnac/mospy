@@ -44,6 +44,20 @@ class Gift(object):
         else:
             print "error gifts"
 
+    def buyItem(self, itemid, section):
+        response = self.session.get(self.config['siteUrl']+"shop/section/"+section+"/")
+
+        if response.url == (self.config['siteUrl']+"shop/section/"+section+"/"):
+            tree = html.fromstring(response.text)
+
+            token = tree.xpath('//span[contains(@onclick,"Shop.checkAndBuy")]/@onclick')[0].split("'")[3]
+
+            response = self.session.post(self.config['siteUrl']+'shop/json/', data={
+                'action': 'buy',
+                'item': itemid,
+                'key': token,
+            })
+
     def takePhoto(self, photoid, n):
         response = self.session.get(self.config['siteUrl']+"nightclub/photo/")
 

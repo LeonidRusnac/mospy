@@ -27,9 +27,9 @@ class Auto(object):
                 response = self.session.get(self.config['siteUrl']+'automobile/car/'+str(self.carid)+'/')
                 tree = html.fromstring(response.text)
 
-                fuel = tree.xpath('//div[@class="fuel"]/span/text()')
-                if 0 in fuel:
-                   self.session.post(self.config['siteUrl']+'automobile/buypetrol/'+str(self.carid)+'/ajax/', data={})
+                fuel = unicode(tree.xpath('//div[@class="fuel"]/span/text()'))
+                if unicode('0') in fuel:
+                   self.session.post(self.config['siteUrl']+'automobile/buypetrol/'+str(self.carid)+'/', data={})
 
 
                 self.session.post(self.config['siteUrl']+'automobile/bringup/', data={
