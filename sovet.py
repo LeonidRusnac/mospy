@@ -49,8 +49,7 @@ class Sovet(object):
 			t = html.fromstring(resp.text)
 			indice = t.xpath('//img[@data-st=3397]/@data-id')[0]
 
-			self.session.get(self.config['siteUrl'] +
-					 'player/json/use/'+indice+'/')
+			self.session.get(self.config['siteUrl'] + 'player/json/use/'+indice+'/')
             else:
                 print "can't register for sovet"
         else:
