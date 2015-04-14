@@ -28,7 +28,7 @@ class Auto(object):
                 tree = html.fromstring(response.text)
 
                 fuel = unicode(tree.xpath('//div[@class="fuel"]/span/text()'))
-                if unicode('0') in fuel:
+               if unicode('0/5') in fuel:
                    self.session.post(self.config['siteUrl']+'automobile/buypetrol/'+str(self.carid)+'/', data={})
 
 
