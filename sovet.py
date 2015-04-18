@@ -14,7 +14,7 @@ class Sovet(object):
         self.session = session
         self.config = userConfig
 
-    def registerToGroup(self, lvl, password):
+    def registerToGroup(self, lvl, password, vitamins=False):
         # first of all check if not blocked in some place
         response = self.session.get(self.config['siteUrl']+'sovet/map/')
 
@@ -43,13 +43,13 @@ class Sovet(object):
                                       'action': 'tryPasscode',
                                       'type': 'sovet',
                                       'passcode': password})
-                # now eat vitamins
-                resp = self.session.get(self.config['siteUrl']+'player/')
-                t = html.fromstring(resp.text)
-                indice = t.xpath('//img[@data-st=3397]/@data-id')[0]
+                # now eat vitamins if need
+		if vitamins:
+			resp = self.session.get(self.config['siteUrl']+'player/')
+			t = html.fromstring(resp.text)
+			indice = t.xpath('//img[@data-st=3397]/@data-id')[0]
 
-                self.session.get(self.config['siteUrl'] +
-                                 'player/json/use/'+indice+'/')
+			self.session.get(self.config['siteUrl'] + 'player/json/use/'+indice+'/')
             else:
                 print "can't register for sovet"
         else:
