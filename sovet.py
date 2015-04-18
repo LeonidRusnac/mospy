@@ -54,3 +54,11 @@ class Sovet(object):
                 print "can't register for sovet"
         else:
             print 'blocked in some place, can\'t register to sovet'
+
+    def attackLenin(self):
+        '''get progress'''
+        '''get level'''
+        response = self.session.get(self.config['siteUrl']+'neftlenin/')
+        if response.url == (self.config['siteUrl']+'neftlenin/'):
+            pass
+            # ('//i[@class="counter"]/text()')
