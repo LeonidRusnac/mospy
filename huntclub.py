@@ -20,7 +20,7 @@ class HuntClub(object):
         ris = ris.split(': ')[1]
         return int(ris)
 
-    def hunt(self, level, at):
+    def hunt(self, level, at, timers=('','')):
         i = 0
         done = False
         while not done and i < 20:
@@ -51,6 +51,12 @@ class HuntClub(object):
 
                     if lvl in level and hp < (0.9 * myhp):
                         # attack by id = r
+                        if timers != ('',''):
+                            # eat snikers
+                            self.session.post(self.config['siteUrl']+'alley/', data={
+                                'action': 'rest_cooldown',
+                                'code': 'snikers'
+                            })
                         at.attack(id=r)
                         done = True
                         break
