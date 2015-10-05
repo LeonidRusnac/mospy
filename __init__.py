@@ -17,3 +17,4 @@ from .casino import Casino
 from .huntclub import HuntClub
 from .chat import Chat
 from .automobile import Auto
+from .oil import Oil
