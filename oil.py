@@ -28,29 +28,35 @@ class Oil(object):
 
     def getCurrentLevelNumber(self):
         if self.isOldOil():
-            pass
+            response = self.session.get(self.config['siteUrl'] + "neft/")
+            tree = html.fromstring(response.text)
+            number = len(tree.xpath('//i[contains(@class, "icon-locked pulp")]'))
+            return 16 - number
         else:
             # $.post('http://www.moswar.ru/neftlenin', {"action": "getPrize"})
             pass
 
     def getCurrentLevelType(self):
         if self.isOldOil():
-            pass
+            return 'attack'
         else:
             pass
 
     def isOilFinishedForToday(self):
-        return False
+        if self.isOldOil():
+            response = self.session.get(self.config['siteUrl'] + 'neft/')
 
-    def canSwitchToOldOilType(self):
-        return True
+            tree = html.fromstring(response.text)
+            return bool(tree.xpath("//div[@id='ventel_win']"))
 
     def switchToOldOilType(self):
-        self.session.post(
-            self.config['siteUrl'] +
-            'neftlenin',
-            data={
-                'action': 'hideNeftLEnin'})
+        self.session.post(self.config['siteUrl'] + 'neftlenin/', data={'action': 'hideNeftLEnin'})
 
     def isOldOil(self):
-        return False
+        response = self.session.get(self.config['siteUrl'] + 'neft/')
+
+        return 'neftlenin' not in response.url
+
+    def attack(self):
+        if self.isOldOil():
+            self.session.post(self.config['siteUrl'] + "alley/", data={'now': 0, 'action': "attack-npc3"})
