@@ -16,7 +16,7 @@ class Metro(object):
 		self.session = session
 		self.config = userConfig
 
-	def attackRat(self):
+	def attackRat(self, limitLevelForGroupFights=40):
 		'''get timer of new start'''
 		'''get level, and time to wait''' #dashedlink
 		response = self.session.get(self.config['siteUrl']+'metro/')
@@ -31,7 +31,7 @@ class Metro(object):
 					lvl = tree.xpath('//div[@id="action-rat-fight"]/div[@class="holders"]/text()')[0]
 					lvl = int(lvl.split(':')[1])
 					print 'level:' + str(lvl)
-					if lvl % 5 != 0 or lvl < 16:
+					if lvl % 5 != 0 or lvl < limitLevelForGroupFights:
 						self.session.post(self.config['siteUrl']+'metro/track-rat')
 						self.session.post(self.config['siteUrl']+'metro/fight-rat')
 					return lvl
