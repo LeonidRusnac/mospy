@@ -68,7 +68,7 @@ class Gift(object):
 
     def eatDrugs(self, drugs=[]):
         for drug in drugs:
-            self.session.get(self.config['siteUrl']+'player/json/use/'+drug)
+            self.session.get(self.config['siteUrl']+'player/json/use/'+str(drug))
 
     def buyGifts(self, receiver, gifts=[]):
         token = self.getSecret()
