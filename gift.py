@@ -73,6 +73,11 @@ class Gift(object):
         for gift in gifts:
             self.buyGift(receiver, gift, token)
 
+    def openGifts(self, gifts=[]):
+        ids = [self.getIdByDataSt(gift) for gift in gifts]
+        for gift in ids:
+            self.session.get(self.config['siteUrl']+'player/json/opengift/'+str(gift))
+
     def buyDrugs(self, drugs=[], amount=1):
         token = self.getSecret()
         for drug in drugs:
