@@ -95,7 +95,9 @@ class Gift(object):
         response = self.session.get(self.config['siteUrl']+'player/')
         if response.url == (self.config['siteUrl']+'player/'):
             tree = html.fromstring(response.text)
-            return tree.xpath('//img[@data-st='+str(dataST)+']/@data-id')[0]
+            val = tree.xpath('//img[@data-st='+str(dataST)+']/@data-id')
+            if val:  # if not empty
+                val[0]
         else:
             return ""
 
