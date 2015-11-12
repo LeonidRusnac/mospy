@@ -13,7 +13,7 @@ class Gift(object):
     # static constants
     BUY_CONST_GIFTS = {
         'tea': [3860, 2936, 325, 327, 326],
-        'chocolade': [3864, 2937, 328, 324, 323],
+        'chocolate': [3864, 2937, 328, 324, 323],
         'valuiki': [3351, 309],
         'respirators': [670, 671]
     }
