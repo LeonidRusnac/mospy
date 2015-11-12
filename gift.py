@@ -11,27 +11,24 @@ from lxml import html
 
 class Gift(object):
     # static constants
-    EATCONST = {
-        'tea': [],
-        'chocolade': [],
-        '15proc': [],
-        '20proc': [],
-        '25proc': [],
-        '30proc': [],
-        'neft': [1876968102, 1876968110, 1876968127, 1876968141, 1876968158, 1876968171]
-    }
-
-    BUYCONSTGIFTS = {
+    BUY_CONST_GIFTS = {
         'tea': [3860, 2936, 325, 327, 326],
         'chocolade': [3864, 2937, 328, 324, 323],
         'valuiki': [3351, 309],
         'respirators': [670, 671]
     }
 
-    BUYCONSTDRUGS = {
+    DRUGS_CONST = {
         '15ruda': [84, 85, 86, 87, 88, 89],
-        '25neft': [],  # depends by level
-        '3ruda': []  # depends by level
+        '25neft': [3060, 3061, 3062, 3063, 3064, 3065],  # 17 level
+        '9ruda': [3054, 3055, 3056, 3057, 3058, 3059],  # 17 level
+        '3ruda': [2609, 2610, 2611, 2612, 2613, 2614],  # 17 level
+        'tea': [3861, 3862, 3863, 2941, 2942, 2943, 234, 235, 236, 231, 232, 233, 228, 229, 230],
+        'chocolate': [3865, 3866, 3867, 2938, 2939, 2940, 222, 223, 224, 219, 220, 221, 216, 217, 218],
+        'lolipopAnti': [2872],
+        'lolipopPro': [2871],
+        'piani': [52],
+        'tvorog': [53]
     }
 
     def __init__(self, session, userConfig):
@@ -67,7 +64,8 @@ class Gift(object):
             print "resetby is wrong, must be 'tonus' or 'snikers'"
 
     def eatDrugs(self, drugs=[]):
-        for drug in drugs:
+        ids = [self.getIdByDataSt(drug) for drug in drugs]
+        for drug in ids:
             self.session.get(self.config['siteUrl']+'player/json/use/'+str(drug))
 
     def buyGifts(self, receiver, gifts=[]):
@@ -85,6 +83,14 @@ class Gift(object):
         if response.url == (self.config['siteUrl']+"shop/section/gifts/#all"):
             tree = html.fromstring(response.text)
             return tree.xpath('//span[contains(@onclick,"Shop.checkAndBuy")]/@onclick')[0].split("'")[3]
+        else:
+            return ""
+
+    def getIdByDataSt(self, dataST):
+        response = self.session.get(self.config['siteUrl']+'player/')
+        if response.url == (self.config['siteUrl']+'player/'):
+            tree = html.fromstring(response.text)
+            return tree.xpath('//img[@data-st='+str(dataST)+']/@data-id')[0]
         else:
             return ""
 
