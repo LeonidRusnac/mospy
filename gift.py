@@ -97,9 +97,9 @@ class Gift(object):
             tree = html.fromstring(response.text)
             val = tree.xpath('//img[@data-st='+str(dataST)+']/@data-id')
             if val:  # if not empty
-                val[0]
-        else:
-            return ""
+                return val[0]
+
+        return ""
 
     def takePhoto(self, photoid, n):
         response = self.session.get(self.config['siteUrl']+"nightclub/photo/")
