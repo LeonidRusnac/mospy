@@ -111,4 +111,4 @@ class Gift(object):
                     'backid': photoid
                 })
         else:
-            print 'error setting phone'
+            print 'error taking photo'
