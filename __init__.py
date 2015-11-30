@@ -18,3 +18,4 @@ from .huntclub import HuntClub
 from .chat import Chat
 from .automobile import Auto
 from .oil import Oil
+from .dungeon import Dungeon
