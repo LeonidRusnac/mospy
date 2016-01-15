@@ -10,7 +10,7 @@ import requests
 from lxml import html
 
 class Auto(object):
-    def __init__(self, session, userConfig, carid, direction='None'):
+    def __init__(self, session, userConfig, carid, direction=None):
         self.session = session
         self.config = userConfig
         self.carid = carid
@@ -30,7 +30,7 @@ class Auto(object):
                     'car': self.carid
                 })
 
-    def ride(self, direction='None'):
+    def ride(self, direction=None):
         if not direction:
             if not self.direction:
                 return
