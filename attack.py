@@ -31,11 +31,11 @@ class Attack(object):
             })
 
             if 'fight' in response.url:
-                print 'Attack done'
                 tree = html.fromstring(response.text)
-                print "You have won: " + tree.xpath('//span[@class="tugriki"]/text()')[0]
+                return int(tree.xpath('//span[@class="tugriki"]/text()')[0].translate(None, ','))
             else:
-                print 'Something gone wrong'
+		return -1
+
         elif typeA == '':
             print 'Attack by levels'
             response = self.session.post(self.config['siteUrl']+'alley/search/level/', data={
