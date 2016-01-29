@@ -7,6 +7,7 @@ __copyright__ = "Copyright 2014, Leonid Rusnac"
 __version__ = "0.1"
 
 from lxml import html
+import re
 
 
 class Oil(object):
@@ -33,8 +34,19 @@ class Oil(object):
             number = len(tree.xpath('//i[contains(@class, "icon-locked pulp")]'))
             return 16 - number
         else:
-            # $.post('http://www.moswar.ru/neftlenin', {"action": "getPrize"})
-            pass
+	    response = self.session.post(self.config['siteUrl'] + 'neftlenin/', data={
+		'action': 'getPrize'
+	    })
+
+	    #print response.text.encode('ascii', 'ignore')
+
+	    page = response.text.encode('ascii', 'ignore')
+	    match = re.findall('\"step\":\"[0-9]*\"', page)
+	    if len(match) == 1:
+		    lvl = re.findall('[0-9]+', match[0])
+		    if len(lvl) == 1:
+			return int(lvl[0])
+
 
     def getCurrentLevelType(self):
         if self.isOldOil():
