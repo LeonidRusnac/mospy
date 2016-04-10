@@ -1,4 +1,5 @@
 * fast group fight (rat and oil)
+* clan wars
 * finish new oil pipe
 * dungeon
 * phone fight

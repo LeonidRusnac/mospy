@@ -41,9 +41,9 @@ class Gift(object):
             'item': giftId,
             'playerid': receiver,
             'key': secret,
-            'comment': ' ',
-            'private': 'yes',
-            'anonimous': 'yes'
+            'comment': '',
+            'private': 'no',
+            'anonimous': 'no'
         })
 
     def buyItem(self, itemid, secret, amount=1):

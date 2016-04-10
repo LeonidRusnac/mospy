@@ -50,9 +50,18 @@ class Oil(object):
 
     def getCurrentLevelType(self):
         if self.isOldOil():
-            return 'attack'
+            return 'd'
         else:
-            pass
+	    response = self.session.post(self.config['siteUrl'] + 'neftlenin/', data={
+		'action': 'getPrize'
+	    })
+
+	    page = response.text.encode('ascii', 'ignore')
+	    match = re.findall('\"typeStep\":\"[a-z]*\"', page)
+	    if len(match) == 1:
+		    lvlType = re.findall('"[a-z]"', match[0])
+		    if len(lvlType) == 1:
+			return lvlType[0][1]
 
     def isOilFinishedForToday(self):
         if self.isOldOil():
@@ -60,6 +69,8 @@ class Oil(object):
 
             tree = html.fromstring(response.text)
             return bool(tree.xpath("//div[@id='ventel_win']"))
+	else:
+	    pass
 
     def switchToOldOilType(self):
         self.session.post(self.config['siteUrl'] + 'neftlenin/', data={'action': 'hideNeftLEnin'})
@@ -72,3 +83,21 @@ class Oil(object):
     def attack(self):
         if self.isOldOil():
             self.session.post(self.config['siteUrl'] + "alley/", data={'now': 0, 'action': "attack-npc3"})
+	else:
+	    self.session.post(self.config['siteUrl']+'alley/', data={
+		'action': 'rest_cooldown',
+		'code': 'tonus'
+	    })
+            self.session.post(self.config['siteUrl'] + "neftlenin/", data={'action': 'startAction'})
+
+    def preMission(self):
+        self.session.post(self.config['siteUrl'] + "neftlenin/", data={'action': 'preMissionView'})
+        self.session.post(self.config['siteUrl'] + "neftlenin/", data={'action': 'preMission'})
+
+    def getInfo(self):
+	
+        response = self.session.post(self.config['siteUrl'] + 'neftlenin/', data={
+	    'action': 'getPrize'
+	}, headers={'Accept': 'application/json'})
+
+        print response.text.encode('ascii', 'ignore')

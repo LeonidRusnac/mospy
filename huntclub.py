@@ -41,7 +41,11 @@ class HuntClub(object):
                     self.config['siteUrl'] + 'player/' + r)
                 tree = html.fromstring(response.text)
                 lvl = tree.xpath('//h3[@class="curves clear"]//span[@class=\
-                                 "level"]/text()')[0]
+                                 "level"]/text()')
+		if len(lvl) > 0:
+			lvl = lvl[0]
+		else:
+			break
                 lvl = int(str(lvl[1]) + str(lvl[2]))
 
                 hp = tree.xpath('//div[@class="player-info"]//span[@class=\
