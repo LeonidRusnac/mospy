@@ -16,19 +16,18 @@ class Attack(object):
         self.session = session
         self.config = userConfig
 
-    def attack(self, typeA='', min=0, max=0, id=0, npc=True):
+    def attack(self, typeA='', min=0, max=0, id=0, npc=True, clanwar=False):
         '''
         if id attack by id, if not type attack by levels
         else attack by type
         '''
         if id != 0:
             print 'Attack by id'
-            response = self.session.post(self.config['siteUrl']+'alley/', data={
-                'action': 'attack',
-                'player': id,
-                'werewolf': 0,
-                'useitems': 0
-            })
+            d = {'action': 'attack', 'player': id, 'werewolf': 0, 'useitems': 0}
+            if clanwar:
+                # d['test'] = True
+                pass
+            response = self.session.post(self.config['siteUrl']+'alley/', data=d)
 
             if 'fight' in response.url:
                 tree = html.fromstring(response.text)
