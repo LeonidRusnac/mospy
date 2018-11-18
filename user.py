@@ -70,15 +70,15 @@ class User(object):
 
 			if response.url == (self.config['siteUrl']+'player/'):
 				tree = html.fromstring(response.text)
-				info['current_hp'] = tree.xpath('//span[@id="currenthp"]/text()')[0]
-				info['max_hp'] = tree.xpath('//span[@id="maxhp"]/text()')[0]
-				info["current_tonus"] = tree.xpath('//span[@id="currenttonus"]/text()')[0]
-				info["max_tonus"] = tree.xpath('//span[@id="maxenergy"]/text()')[0]
+				info['current_hp'] = tree.xpath('//span[@id="currenthp"]/text()')[0].replace(',', '')
+				info['max_hp'] = tree.xpath('//span[@id="maxhp"]/text()')[0].replace(',', '')
+				info["current_tonus"] = tree.xpath('//span[@id="currenttonus"]/text()')[0].replace(',', '')
+				info["max_tonus"] = tree.xpath('//span[@id="maxenergy"]/text()')[0].replace(',', '')
 
-				info["money"] = tree.xpath('//span[@rel="money"]/text()')[0]
-				info["ore"] = tree.xpath('//span[@rel="ore"]/text()')[0]
-				info["oil"] = tree.xpath('//span[@rel="oil"]/text()')[0]
-				info["honey"] = tree.xpath('//span[@rel="honey"]/text()')[0]
+				info["money"] = tree.xpath('//span[@rel="money"]/text()')[0].replace(',', '')
+				info["ore"] = tree.xpath('//span[@rel="ore"]/text()')[0].replace(',', '')
+				info["oil"] = tree.xpath('//span[@rel="oil"]/text()')[0].replace(',', '')
+				info["honey"] = tree.xpath('//span[@rel="honey"]/text()')[0].replace(',', '')
 			else:
 				print 'Error into grab user info'
 		else:

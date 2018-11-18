@@ -63,10 +63,13 @@ class Gift(object):
         else:
             print "resetby is wrong, must be 'tonus' or 'snikers'"
 
-    def eatDrugs(self, drugs=[]):
+    def eatDrugs(self, drugs=[], fastbuy=False):
         ids = [self.getIdByDataSt(drug) for drug in drugs]
         for drug in ids:
-            self.session.get(self.config['siteUrl']+'player/json/use/'+str(drug))
+	    if fastbuy:
+                self.session.get(self.config['siteUrl']+'player/json/use/'+str(drug)+'?fastbuy=1')
+	    else:
+                self.session.get(self.config['siteUrl']+'player/json/use/'+str(drug))
 
     def buyGifts(self, receiver, gifts=[]):
         token = self.getSecret()
