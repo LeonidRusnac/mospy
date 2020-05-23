@@ -54,4 +54,6 @@ class Sovet(object):
                 print "can't register for sovet"
         else:
             print 'blocked in some place, can\'t register to sovet'
-
+    
+    def getReward(self, lvl):
+        self.session.post(self.config['siteUrl'] + 'sovet/get_metro_weekly_reward/', data = {'action': 'get_metro_weekly_reward', 'metro': lvl})

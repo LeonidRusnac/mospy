@@ -31,7 +31,11 @@ class Attack(object):
 
             if 'fight' in response.url:
                 tree = html.fromstring(response.text)
-                return int(tree.xpath('//span[@class="tugriki"]/text()')[0].translate(None, ','))
+                turghi = tree.xpath('//span[@class="tugriki"]/text()')
+                if len(turghi) > 0:
+                    return int(turghi[0].translate(None, ','))
+                else:
+                    return 0
             else:
 		return -1
 

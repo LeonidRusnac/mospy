@@ -27,11 +27,9 @@ class HuntClub(object):
             response = self.session.get(self.config['siteUrl'] + 'huntclub/')
             tree = html.fromstring(response.text)
 
-            ris = tree.xpath('//table[@class="list"]//span[@class="user "]/a[ \
-                starts-with(@href, "/player")]/@href')
+            ris = tree.xpath('//table[@class="list"]//span[@class="user "]/a[starts-with(@href, "/player")]/@href')
             if ris != []:
-                myhp = tree.xpath('//div[@id="personal"]//span[@id="currenthp"]\
-                                  /text()')[0]
+                myhp = tree.xpath('//div[@id="personal"]//span[@id="currenthp"]/text()')[0]
                 myhp = int(myhp)
 
             for r in set(ris):
@@ -40,20 +38,18 @@ class HuntClub(object):
                 response = self.session.get(
                     self.config['siteUrl'] + 'player/' + r)
                 tree = html.fromstring(response.text)
-                lvl = tree.xpath('//h3[@class="curves clear"]//span[@class=\
-                                 "level"]/text()')
+                lvl = tree.xpath('//h3[@class="curves clear"]//span[@class="level"]/text()')
 		if len(lvl) > 0:
-			lvl = lvl[0]
+                    lvl = lvl[0]
 		else:
-			break
+                    lvl = tree.xpath('//div[@class="heading clear custom-profile__header"]//span[@class="user "]//span[@class="level"]/text()')
                 lvl = int(str(lvl[1]) + str(lvl[2]))
 
-                hp = tree.xpath('//div[@class="player-info"]//span[@class=\
-                                "currenthp"]/text()')
+                hp = tree.xpath('//div[@class="pers enemy"]//span[@class="currenthp"]/text()')
                 if hp != []:
                     hp = int(hp[0])
 
-                    if lvl in level and hp < (0.9 * myhp):
+                    if lvl in level and hp < (0.95 * myhp):
                         # attack by id = r
                         if timers != ('',''):
                             # eat snikers

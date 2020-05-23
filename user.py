@@ -52,7 +52,7 @@ class User(object):
 			else:
 				with open(self.config['cookies_file'], 'w') as f:
 					pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
-				print "Congrats, you're now logged in"
+				# print "Congrats, you're now logged in"
 		else:
 			pass
 

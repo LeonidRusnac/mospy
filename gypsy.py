@@ -22,15 +22,10 @@ class Gypsy(object):
 				'gametype': 0
 			})
 
-			print "Gypsy start!"
 
 			self.session.post(self.config['siteUrl']+'camp/gypsy/', data={
 				'action': 'gypsyAuto'
 			})
-
-			print "Gypsy done!"
-
-
 
 		else:
 			print 'Error play with gypsy, be sure not blocked somewhere!'
